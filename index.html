@@ -1,0 +1,85 @@
+<!-- Created by Lahesh, 2024 - visit lahe.sh/playground for all demos -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mouse Draw</title>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.0.2/pixi.min.js'></script> -->
+  
+  <!-- <link rel="stylesheet" href="./styles.css"> -->
+  
+  <style>
+    body {
+    margin: 0;
+    overflow: hidden;
+    background-color: rgb(27, 27, 27);
+    }
+  </style>
+</head>
+<body>
+  
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <!-- <canvas id="canvas" class="view"></canvas> -->
+  
+  
+    
+  
+  
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.0.2/pixi.min.js'></script> -->
+  <!-- <script src='js/new.js'></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="./js/line.js"></script> -->
+  
+  
+  
+  <script>
+    //Canvas
+    var canvas = document.getElementById('canvas');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    var ctx = canvas.getContext('2d');
+    //Variables
+    var canvasx = $(canvas).offset().left;
+    var canvasy = $(canvas).offset().top;
+    var last_mousex = last_mousey = 0;
+    var mousex = mousey = 0;
+    var mousedown = false;
+
+    //Mousedown
+    $(canvas).on('mousedown', function(e) {
+        last_mousex = parseInt(e.clientX-canvasx);
+      last_mousey = parseInt(e.clientY-canvasy);
+        mousedown = true;
+    });
+
+    //Mouseup
+    $(canvas).on('mouseup', function(e) {
+        mousedown = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    //Mousemove
+    $(canvas).on('mousemove', function(e) {
+        mousex = parseInt(e.clientX-canvasx);
+      mousey = parseInt(e.clientY-canvasy);
+        if(mousedown) {
+            ctx.clearRect(0,0,canvas.width,canvas.height); //clear canvas
+            ctx.beginPath();
+            ctx.moveTo(last_mousex,last_mousey);
+            ctx.lineTo(mousex,mousey);
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 6;
+            ctx.lineJoin = ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+        
+    });
+
+
+  </script>
+  
+
+</body>
+</html>
